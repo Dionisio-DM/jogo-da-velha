@@ -1,16 +1,18 @@
-const boardRegions = document.querySelectorAll('#gameBoard span')
-const inputPlayer1 = document.querySelector('#player1')
-const inputPlayer2 = document.querySelector('#player2')
+const boardRegions = document.querySelectorAll('#gameBoard span') // Selecionando os elementos do tabuleiro
+const inputPlayer1 = document.querySelector('#player1') // Selecionando o input do primeiro jogador
+const inputPlayer2 = document.querySelector('#player2') // Selecionando o input do segundo jogador
 let vBoard = []
 let turnPlayer = ''
 
+// Função para atualizar o nome do jogador da vez e anunciar o resultado da partida
 const updateTitle = () => {
     const playerInput = document.getElementById(turnPlayer)
     document.getElementById('turnPlayer').innerText = playerInput.value
 }
 
+// Função para iniciar o jogo e garantir que o tabuleiro seja limpo, no caso de um recomeço de jogo
 const initializeGame = () => {
-    if(inputPlayer1.value == '' || inputPlayer2.value == '' || inputPlayer2.value == ' ' || inputPlayer2.value == ' ') {
+    if(inputPlayer1.value == '' || inputPlayer2.value == '' || inputPlayer2.value == ' ' || inputPlayer2.value == ' ') { // Verifica se os inputs estão preenchidos
         alert('Digite nomes válidos')
         return
     }
@@ -23,9 +25,10 @@ const initializeGame = () => {
         e.classList.add('cursorPointer')
         e.innerText = ''
         e.addEventListener('click', handleBoardClick)
-    })
+    }) // Limpeza do tabuleiro e inicio do jogo
 }
 
+// Função para verificar quais as regiões que um jogador venceu
 const getWinRegions = () => {
     const winRegions = []
     if (vBoard[0][0] && vBoard[0][0] === vBoard[0][1] && vBoard[0][0] === vBoard[0][2])
@@ -47,11 +50,13 @@ const getWinRegions = () => {
   return winRegions
 }
 
+// Função para desabilitar as áreas já clicadas no tabuleiro
 const disableReagion = e => {
     e.classList.remove('cursorPointer')
     e.removeEventListener('click', handleBoardClick)
 }
 
+// Função para desabilitar o tabuleiro inteiro, uma vez que algum dos jogadores ganha
 const disableGameBoard = e => {
     e.forEach(spans => {
         spans.classList.remove('cursorPointer')
@@ -59,6 +64,7 @@ const disableGameBoard = e => {
     })
 }
 
+// Função para alterar a cor da área em que o jogador venceu
 const handleWin = regions =>{
     regions.forEach(region =>{
         document.querySelector('[data-region="'+ region +'"]').classList.add('win')
@@ -68,9 +74,10 @@ const handleWin = regions =>{
     disableGameBoard(boardRegions)
 }
 
+// Função para marcar as regiões clicadas do tabuleiro e desabilitaa-las, não podendo ser alteradas
 const handleBoardClick = e => {
-    const span = e.currentTarget
-    const region = e.currentTarget.dataset.region
+    const span = e.currentTarget // Seleciona o span clicado
+    const region = e.currentTarget.dataset.region // Seleciona o atributo data que contém a coordenada de onde fica o span clicado
     const rowColumnPair = region.split('.')
     const row = rowColumnPair[0]
     const column = rowColumnPair[1]
@@ -82,9 +89,10 @@ const handleBoardClick = e => {
         vBoard[row][column] = 'O'
     }
     console.clear()
-    console.table(vBoard)
-    disableReagion(span)
+    console.table(vBoard) // Mostra no console uma tabela referente à situação do jogo
+    disableReagion(span) // Desabilita o span clicado da vez
     const winReagions = getWinRegions()
+    // Verifica se tem algum ganhador ou se deve proseguir ou declarar empate
     if(winReagions.length > 0){
         handleWin(winReagions)
     } else if (vBoard.flat().includes('')){
@@ -95,4 +103,4 @@ const handleBoardClick = e => {
     }
 }
 
-document.getElementById('start').addEventListener('click', initializeGame)
+document.getElementById('start').addEventListener('click', initializeGame) // Adiciona um event listener no botão "Começar"
