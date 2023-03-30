@@ -1,0 +1,64 @@
+body {
+    font-family: Montserrat;
+    background-color: #546a76;
+    text-align: center;
+    color: #fff;
+}
+
+#gameBoard {
+    background-color: #0c0910;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 6rem 6rem 6rem;
+    grid-template-rows: 6rem 6rem 6rem;
+    gap: .5rem;
+    margin-bottom: 1.5rem;
+    max-width: 19rem;
+}
+
+#gameBoard span {
+    background-color: #ffead0;
+    display: grid;
+    place-content: center;
+    font-size: 5rem;
+    color: #0c0910;
+}
+
+#gameBoard span.win {
+    background-color: #6bd425;
+}
+
+#setup {
+    padding-top: 4vh;
+    padding-bottom: 4vh;
+}
+
+#start {
+    border-radius: 4px;
+    background-color: #ffead0;
+    color: #0c0910;
+    padding: 3px 8px;
+    border: none;
+    cursor: pointer;
+}
+
+.cursorPointer {
+    cursor: pointer;
+}
+
+label {
+    font-weight: bold;
+}
+
+input {
+    border-radius: 4px;
+}
+
+h2 {
+    font-weight: 800;
+    text-align: center;
+}
+
+hr {
+    border-color: #0c0910;
+}
